@@ -5,7 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
+
+        <title>{{ $title ?? 'Solar Clinic' }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,6 +15,14 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        {{-- pikaday --}}
+        <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+
+        {{-- pikaday css --}}
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+    
+        {{-- moment.js --}}
+        <script src="https://cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
