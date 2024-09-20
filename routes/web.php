@@ -11,36 +11,43 @@ use App\Livewire\FeaturedArticles;
 use App\Livewire\FeaturedDoctors;
 use App\Livewire\PatientArticlePage;
 use App\Livewire\RecentAppointment;
+use App\Livewire\SchedulesComponent;
+use App\Livewire\SchedulesCreateForm;
+use App\Livewire\SchedulesEditForm;
 use App\Livewire\SpecialitiesComponent;
 use App\Livewire\SpecialityForm;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
+Route::get('/filter-by-speciality/{id}', DoctorBySpeciality::class);
 
+Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 
-
+// Patient routes
 Route::group(['middleware' => 'patient'], function() {
     Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'patient'])
     ->name('dashboard');
 
-    Route::get('/patient/appointments', )->name('patient.appointments.index');
+    Route::get('/patient/appointments', PatientArticlePage::class)->name('patient.appointments.index');
     Route::get('/patient/booking/{id}', BookingComponent::class)->name('patient.appointments.book');
 
     Route::get('/articles', PatientArticlePage::class)->name('articles');
 });
 
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
 
-Route::get('/doctor/dashboard', [DoctorController::class, 'loadDoctorDashboard'])
-    ->middleware('doctor')
-    ->name('doctor-dashboard');
+// Doctor Routes
+Route::group(['middleware' => 'doctor'], function() {
+    
+    Route::get('/doctor/dashboard', )->name('doctor-dashboard');
+    Route::get('/doctor/appointments', )->name('doctor-appointments');
+    Route::get('/doctor/schedules', SchedulesComponent::class)->name('doctor-schedules');
+    Route::get('/doctor/schedules/create', SchedulesCreateForm::class)->name('doctor-schedules-create');
+    Route::get('/doctor/schedules/edit/{id}', SchedulesEditForm::class)->name('doctor-schedules-edit');
+});
 
-Route::get('/filter-by-speciality/{id}', DoctorBySpeciality::class);
 
-
+// Admin Routes
 Route::group(['middleware' => 'admin'], function() {
 
     // Route::get('/admin/dashboard', [AdminController::class, 'loadAdminDashboard'])
@@ -55,10 +62,6 @@ Route::group(['middleware' => 'admin'], function() {
     // ->name('admin-specialities');    
     
     // Route::get('/admin/create/specialites', [AdminController::class, 'loadSpecialitiesForm']);
-
-
-
-
 
     Route::get('/admin/dashboard', RecentAppointment::class)->name('admin-dashboard');
 

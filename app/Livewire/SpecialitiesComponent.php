@@ -16,7 +16,7 @@ class SpecialitiesComponent extends Component
             Specialities::findOrFail($id)->delete();
             session()->flash('message', 'Speciality deleted successfully!');
         } catch (\Throwable $th) {
-            session()->flash('error', 'Failed to delete todo!');
+            session()->flash('error', 'Failed to delete speciality!');
         //     return;
         }
     }

@@ -1,3 +1,3 @@
 <x-app-layout>
-    <h1 class="text-primary">Doctor Dashboard</h1>
+    <h1 class="text-primary">Doctor a</h1>
 </x-app-layout>

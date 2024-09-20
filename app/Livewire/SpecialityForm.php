@@ -10,10 +10,10 @@ use Livewire\Component;
 
 class SpecialityForm extends Component
 {
-    #[Validate('required|min:3|unique:specialities,speciality_name')]
-
+    
     #[Layout('layouts.app')]
     
+    #[Validate('required|min:3|unique:specialities,speciality_name')]
     public $name = '';
 
     protected $messages = [

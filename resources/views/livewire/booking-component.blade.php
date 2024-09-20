@@ -13,12 +13,13 @@
           </div>
           Processing..
         </div>
+        
         <!-- Card Blog -->
             <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-10 bg-white border my-2  shadow-md">
                 <!-- Grid -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
                 <div class="text-center">
-                    <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/>
+                    {{-- <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/> --}}
                     <div class="mt-2 sm:mt-4">
                     <h3 class="text-sm font-medium text-gray-800 sm:text-base lg:text-lg dark:text-neutral-200">
                         {{$doctor_details->doctorUser->name}}
@@ -61,6 +62,7 @@
                 <!-- End Grid -->
             </div>
         <!-- End Card Blog -->
+
         <script src="pikaday.js"></script>
         <script>
             // Inject available dates from Livewire
@@ -80,5 +82,6 @@
                     }
                 });
         </script>
+
     </div>
 </div>

@@ -30,7 +30,7 @@ new class extends Component
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    @if (auth()->user() && auth()->user()->role == 0)
+                    @if (auth()->check() && auth()->user()->role == 0)
 
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
@@ -43,7 +43,7 @@ new class extends Component
                         </x-nav-link>
 
                     @endif
-                    @if (auth()->user() && auth()->user()->role == 2)
+                    @if (auth()->check() && auth()->user()->role == 2)
                     
                         <x-nav-link :href="route('admin-dashboard')" :active="request()->routeIs('admin-dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
@@ -55,6 +55,18 @@ new class extends Component
                             {{ __('Speciality') }}
                         </x-nav-link>
 
+                    @endif
+
+                    @if (auth()->check() && auth()->user()->role == 1)
+                        <x-nav-link :href="route('doctor-dashboard')" :active="request()->routeIs('doctor-dashboard')" wire:navigate>
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('doctor-schedules')" :active="request()->routeIs('doctor-schedules*')" wire:navigate>
+                            {{ __('Schedules') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('doctor-appointments')" :active="request()->routeIs('doctor-appointments')" wire:navigate>
+                            {{ __('My Appointment') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>

@@ -23,7 +23,7 @@ class SpecialitiesSeeder extends Seeder
 
         foreach ($specialities as $speciality) {
             Specialities::factory()->create([
-                'name' => $speciality
+                'speciality_name' => $speciality
             ]);
         }
     }

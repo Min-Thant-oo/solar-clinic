@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('doctor_schedules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('doctor');
+            // $table->unsignedBigInteger('doctor');
             $table->foreignId('doctor_id')->constrained()->cascadeOnDelete();
             // 0-Sunday  1-Monday  6-Friday
             $table->integer('available_day')->nullable(); 

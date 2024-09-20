@@ -20,7 +20,6 @@
                 </h3>
                 <p class="text-sm text-gray-500">
                   {{count($speciality->doctors)}} Doctors
-                  {{-- 4 Doctors --}}
                 </p>
               </div>
               <div>
