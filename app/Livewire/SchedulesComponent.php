@@ -12,7 +12,7 @@ class SchedulesComponent extends Component
 
     #[Layout('layouts.app')]
 
-    public $schedules;
+    // public $schedules = '';
     public $daysOfWeek;
 
     // public function mount() {
@@ -26,10 +26,11 @@ class SchedulesComponent extends Component
     // }
 
     public function mount() {
-        $this->schedules = DoctorSchedule::whereHas('doctor', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->with('doctor')->get();
-        // dd($this->schedules);
+
+        // this won't recall the query again after delete. so i should call query directly under render
+        // $this->schedules = DoctorSchedule::whereHas('doctor', function ($query) {
+        //     $query->where('user_id', Auth::id());
+        // })->with('doctor')->get();
 
         $this->daysOfWeek = [
             '0' => 'Monday',
@@ -55,6 +56,11 @@ class SchedulesComponent extends Component
     
     public function render()
     {
-        return view('livewire.schedules-component');
+        return view('livewire.schedules-component', [
+            'schedules' => DoctorSchedule::whereHas('doctor', function ($query) {
+                            $query->where('user_id', Auth::id());
+                        })->with('doctor')->get(),
+        ]
+    );
     }
 }

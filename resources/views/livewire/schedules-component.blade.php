@@ -86,7 +86,7 @@
                             </a>
                             <button 
                               wire:click='delete({{ $schedule->id }})'     
-                              wire:confirm.prompt="Are you sure?\n\nType {{ $schedule->schedule_name}} to confirm|{{ $schedule->schedule_name}}"
+                              wire:confirm="Are you sure you want to delete this schedule?"
                               class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-red-600 text-white hover:bg-red-700 focus:outline-none focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"  wire:navigate>
                                 Delete
                             </button>
