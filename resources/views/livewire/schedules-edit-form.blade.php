@@ -16,13 +16,13 @@
 
                     <div class="mt-4">
                         <x-input-label for="from" :value="__('Available From')" />
-                        <input wire:model.live='from' type="time" id="from" class="mt-1 font-medium text-sm text-gray-700 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm py-3 px-4 pe-9 block w-full text-sm disabled:opacity-50 disabled:pointer-events-none">
+                        <input wire:model.blur='from' type="time" id="from" class="mt-1 font-medium text-sm text-gray-700 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm py-3 px-4 pe-9 block w-full text-sm disabled:opacity-50 disabled:pointer-events-none">
                         <x-input-error :messages="$errors->get('from')" class="mt-2" />
                     </div>
 
                     <div class="mt-4">
                         <x-input-label for="to" :value="__('Available To')" />
-                        <input wire:model.live='to' type="time" id="to"  class="mt-1 font-medium text-sm text-gray-700 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm py-3 px-4 pe-9 block w-full text-sm disabled:opacity-50 disabled:pointer-events-none">
+                        <input wire:model.blur='to' type="time" id="to"  class="mt-1 font-medium text-sm text-gray-700 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm py-3 px-4 pe-9 block w-full text-sm disabled:opacity-50 disabled:pointer-events-none">
                         <x-input-error :messages="$errors->get('to')" class="mt-2" />
                     </div>
 

@@ -31,14 +31,20 @@
                 </div>
                 <!-- End Col -->
                 <div class="text-center">
-                    <label for="">Select Appointment Type</label>
-                    <select wire:model="appointment_type" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
+                    {{-- <label for="">Select Appointment Type</label>
+                    <select wire:model="appointment_type" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
                         <option selected="">Open this select menu</option>
                         <option value="0">On site</option>
                         <option value="1">Live consultation</option>
-                        </select>
+                    </select> --}}
                         <h3>Select an Available Date</h3>
-                <input type="text" id="datepicker" autocomplete="off" class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-gray-100 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Select Available date">
+                <input 
+                    placeholder="Select Available date"
+                    type="text" 
+                    id="datepicker" 
+                    autocomplete="off" 
+                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-gray-100"
+                >
                 @if($selectedDate)
                     <div>
                         <h4>Selected Date: {{ $selectedDate }}</h4>
@@ -48,11 +54,15 @@
                     <h2 class="text-xl font-bold mb-2">Available Time Slots</h2>
                     <div class="flex flex-wrap">
                         @foreach ($timeSlots as $slot)
-                            <button class="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                            type="button"
-                            wire:click="bookAppointment('{{$slot}}')"
-                            wire:confirm="Book appointment on {{ $selectedDate }}, {{ $slot }} ?">
-                                {{ date('H:i',strtotime($slot)) }}                 </button>
+                        @dd('hsit')
+                            <button 
+                                class="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                                type="button"
+                                wire:click="bookAppointment('{{$slot}}')"
+                                wire:confirm="Book appointment on {{ $selectedDate }}, {{ $slot }} ?"
+                            >
+                                {{ date('H:i',strtotime($slot)) }}                 
+                            </button>
                         @endforeach
                     </div>
                 </div>
@@ -63,24 +73,27 @@
             </div>
         <!-- End Card Blog -->
 
-        <script src="pikaday.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
         <script>
-            // Inject available dates from Livewire
+            document.addEventListener('DOMContentLoaded', function() {
+                // Ensure Livewire can trigger when a date is selected
                 var availableDates = @json($availableDates);
-    
                 var picker = new Pikaday({
                     field: document.getElementById('datepicker'),
                     format: 'YYYY-MM-DD',
                     onSelect: function(date) {
                         var selectedDate = picker.toString();
-                        @this.call('selectDate', selectedDate);
+                        @this.set('selectedDate', selectedDate);
                     },
                     disableDayFn: function(date) {
-                        // Disable all dates not in the availableDates array
                         var formattedDate = moment(date).format('YYYY-MM-DD');
                         return !availableDates.includes(formattedDate);
                     }
                 });
+            });
+
         </script>
 
     </div>

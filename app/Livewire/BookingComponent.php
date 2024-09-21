@@ -57,7 +57,7 @@ class BookingComponent extends Component
     }
 
     public function fetchTimeSlots($date, $doctor) {
-        $dayofWeek = Carbon::parse($date)->dayOfWeek();
+        $dayofWeek = Carbon::parse($date)->dayOfWeek;
         $carbonDate = Carbon::parse($date)->format('Y-m-d');
         $schedule = DoctorSchedule::where('doctor_id', $doctor->id)
             ->where('available_day', $dayofWeek)
@@ -73,7 +73,7 @@ class BookingComponent extends Component
             $appointmentExists = Appointment::where('doctor_id', $doctor->id)
                 ->where('appointment_date', $carbonDate)
                 ->where('appointment_time', $timeSlot)
-                ->exits();
+                ->exists();
             if (!$appointmentExists) {
                 $slots[] = $timeSlot;
             }
