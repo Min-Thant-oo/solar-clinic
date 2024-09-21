@@ -7,7 +7,6 @@
                     <div>
                         <x-input-label for="available_day" :value="__('Available Date')" />
                         <select wire:model.live="available_day" id="available_day" class="mt-1 font-medium text-sm text-gray-700 border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm py-3 px-4 pe-9 block w-full text-sm disabled:opacity-50 disabled:pointer-events-none">
-                            <option value="{{ $schedules->available_day}}">{{$daysOfWeek[$schedules->available_day]}}</option>
                             @foreach ($daysOfWeek as $key=>$days)
                                 <option value="{{$key}}">{{$days}}</option>
                             @endforeach
