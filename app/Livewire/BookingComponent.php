@@ -27,8 +27,15 @@ class BookingComponent extends Component
 
     public function bookAppointment($slot) {
         Appointment::create([
-            
-        ])
+            'patient_id'        => auth()->user()->id,
+            'doctor_id'         => $this->doctor_details->id,
+            // since selectedDate formate is Wed 24 June 19 2024 and appointment date format is June 19 2024
+            'appointment_date'  => Carbon::parse($this->selectedDate)->format('Y-m-d'),
+            'appointment_time'  => $slot,
+        ]);
+
+        session()->flash('message', 'Your appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate.$slot.' has been confirmed successfully!');
+        return $this->redirectRoute('patient.appointments.index', navigate:true);
     }
 
     public function fetchAvailableDates($doctor) {
