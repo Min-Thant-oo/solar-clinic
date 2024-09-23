@@ -7,12 +7,12 @@
     </x-slot>
 
     <div>
-        <div wire:loading>
+        {{-- <div wire:loading>
           <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
             <span class="sr-only">Loading...</span>
           </div>
           Processing..
-        </div>
+        </div> --}}
         
         <!-- Card Blog -->
             <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-10 bg-white border my-2  shadow-md">
@@ -31,12 +31,6 @@
                 </div>
                 <!-- End Col -->
                 <div class="text-center">
-                    {{-- <label for="">Select Appointment Type</label>
-                    <select wire:model="appointment_type" class="py-3 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none">
-                        <option selected="">Open this select menu</option>
-                        <option value="0">On site</option>
-                        <option value="1">Live consultation</option>
-                    </select> --}}
                         <h3>Select an Available Date</h3>
                 <input 
                     placeholder="Select Available date"
@@ -54,11 +48,10 @@
                     <h2 class="text-xl font-bold mb-2">Available Time Slots</h2>
                     <div class="flex flex-wrap">
                         @foreach ($timeSlots as $slot)
-                        @dd('hsit')
                             <button 
                                 class="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
                                 type="button"
-                                wire:click="bookAppointment('{{$slot}}')"
+                                wire:click="bookAppointment('{{ $slot }}')"
                                 wire:confirm="Book appointment on {{ $selectedDate }}, {{ $slot }} ?"
                             >
                                 {{ date('H:i',strtotime($slot)) }}                 
@@ -85,7 +78,8 @@
                     format: 'YYYY-MM-DD',
                     onSelect: function(date) {
                         var selectedDate = picker.toString();
-                        @this.set('selectedDate', selectedDate);
+                        console.log(selectedDate)
+                        @this.call('selectDate', selectedDate);
                     },
                     disableDayFn: function(date) {
                         var formattedDate = moment(date).format('YYYY-MM-DD');

@@ -25,6 +25,12 @@ class BookingComponent extends Component
         $this->fetchAvailableDates($this->doctor_details);
     }
 
+    public function bookAppointment($slot) {
+        Appointment::create([
+            
+        ])
+    }
+
     public function fetchAvailableDates($doctor) {
         $schedules = DoctorSchedule::where('doctor_id', $doctor->id)->get();
         $availability = [];
