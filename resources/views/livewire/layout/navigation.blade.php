@@ -69,7 +69,7 @@ new class extends Component
                             {{ __('Speciality') }}
                         </x-nav-link>
                         <x-nav-link :href="route('admin-appointments')" :active="request()->routeIs('admin-appointments*')" wire:navigate>
-                            {{ __('Appointments') }}
+                            {{ __('All Appointments') }}
                         </x-nav-link>
                     @endif
 

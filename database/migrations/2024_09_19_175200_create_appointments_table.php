@@ -17,8 +17,6 @@ return new class extends Migration
             $table->foreignId('patient_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->date('appointment_date');
             $table->time('appointment_time');
-            // 0 - unconfirmed, 1 - confirmed
-            $table->integer('status')->default(0);
             // 0 - uncompleted, 1 - completed
             $table->integer('is_completed')->default(0);
             $table->timestamps();
