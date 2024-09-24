@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
+use App\Livewire\AdminDashboard;
 use App\Livewire\AllAppointments;
 use App\Livewire\BookingComponent;
 use App\Livewire\DoctorCreate;
 use App\Livewire\DoctorBySpeciality;
+use App\Livewire\DoctorDashboard;
 use App\Livewire\DoctorListingComponent;
 use App\Livewire\EditSpecialityForm;
 use App\Livewire\FeaturedArticles;
@@ -17,6 +19,7 @@ use App\Livewire\SchedulesCreateForm;
 use App\Livewire\SchedulesEditForm;
 use App\Livewire\SpecialitiesComponent;
 use App\Livewire\SpecialityForm;
+use App\Livewire\StatisticComponent;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
@@ -40,7 +43,7 @@ Route::group(['middleware' => 'patient'], function() {
 // Doctor Routes
 Route::group(['middleware' => 'doctor'], function() {
     
-    Route::get('/doctor/dashboard', )->name('doctor-dashboard');
+    Route::get('/doctor/dashboard', DoctorDashboard::class)->name('doctor-dashboard');
     Route::get('/doctor/appointments', AllAppointments::class)->name('doctor-appointments');
     Route::get('/doctor/schedules', SchedulesComponent::class)->name('doctor-schedules');
     Route::get('/doctor/schedules/create', SchedulesCreateForm::class)->name('doctor-schedules-create');
@@ -64,7 +67,7 @@ Route::group(['middleware' => 'admin'], function() {
     
     // Route::get('/admin/create/specialites', [AdminController::class, 'loadSpecialitiesForm']);
 
-    Route::get('/admin/dashboard', RecentAppointment::class)->name('admin-dashboard');
+    Route::get('/admin/dashboard', AdminDashboard::class)->name('admin-dashboard');
 
     Route::get('/admin/doctors', DoctorListingComponent::class)->name('admin-doctors');
     Route::get('/admin/doctors/create', DoctorCreate::class)->name('admin-doctors-create');
