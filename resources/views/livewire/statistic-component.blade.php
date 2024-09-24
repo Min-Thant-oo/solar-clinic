@@ -79,11 +79,11 @@
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
                 <dt class="pe-3 text-center">
-                    <span class="text-sm font-semibold text-gray-800">5</span>
+                    <span class="text-sm font-semibold text-gray-800">{{ $last_month_users_count }}</span>
                     <span class="block text-sm text-gray-500">last month</span>
                 </dt>
                 <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">5</span>
+                    <span class="text-sm font-semibold text-gray-800">{{ $last_week_users_count }}</span>
                     <span class="block text-sm text-gray-500">last week</span>
                 </dd>
                 </dl>
@@ -105,11 +105,11 @@
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
                     <dt class="pe-3 text-center">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_month_doctors_count }}</span>
                         <span class="block text-sm text-gray-500">last month</span>
                     </dt>
                     <dd class="text-start ps-3">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_week_doctors_count }}</span>
                         <span class="block text-sm text-gray-500">last week</span>
                     </dd>
                     </dl>
@@ -130,11 +130,11 @@
                 </div>
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
                     <dt class="pe-3 text-center">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_month_patients_count }}</span>
                         <span class="block text-sm text-gray-500">last month</span>
                     </dt>
                     <dd class="text-start ps-3">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_week_patients_count }}</span>
                         <span class="block text-sm text-gray-500">last week</span>
                     </dd>
                 </dl>
@@ -156,11 +156,11 @@
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
                     <dt class="pe-3 text-center">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_month_appointments_count }}</span>
                         <span class="block text-sm text-gray-500">last month</span>
                     </dt>
                     <dd class="text-start ps-3">
-                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_week_appointments_count }}</span>
                         <span class="block text-sm text-gray-500">last week</span>
                     </dd>
                 </dl>
