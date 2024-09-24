@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
+use App\Livewire\AllAppointments;
 use App\Livewire\BookingComponent;
 use App\Livewire\DoctorCreate;
 use App\Livewire\DoctorBySpeciality;
@@ -29,7 +30,7 @@ Route::group(['middleware' => 'patient'], function() {
     ->middleware(['auth', 'verified', 'patient'])
     ->name('dashboard');
 
-    Route::get('/patient/appointments', PatientArticlePage::class)->name('patient.appointments.index');
+    Route::get('/patient/appointments', AllAppointments::class)->name('patient.appointments.index');
     Route::get('/patient/booking/{id}', BookingComponent::class)->name('patient.appointments.book');
 
     Route::get('/articles', PatientArticlePage::class)->name('articles');

@@ -34,7 +34,7 @@ class BookingComponent extends Component
             'appointment_time'  => $slot,
         ]);
 
-        session()->flash('message', 'Your appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate.$slot.' has been confirmed successfully!');
+        session()->flash('message', 'Your appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate. $slot.' has been confirmed successfully!');
         return $this->redirectRoute('patient.appointments.index', navigate:true);
     }
 
