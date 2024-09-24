@@ -14,26 +14,19 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    150
+                    {{ $doctor_appointments_count }}
                 </h3>
                 </div>
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-green-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        1.7%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">5</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
+                    <dt class="pe-3 text-center">
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_month_appointments_count }}</span>
+                        <span class="block text-sm text-gray-500">last month</span>
+                    </dt>
+                    <dd class="text-start ps-3">
+                        <span class="text-sm font-semibold text-gray-800">{{ $last_week_appointments_count }}</span>
+                        <span class="block text-sm text-gray-500">last week</span>
+                    </dd>
                 </dl>
             </div>
             <!-- End Card -->
@@ -47,27 +40,9 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    25
+                    {{$doctor_upcoming_appointment_count}}
                 </h3>
                 </div>
-        
-                <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-green-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        5.6%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">7</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
-                </dl>
             </div>
             <!-- End Card -->
         
@@ -80,27 +55,9 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    4
+                    {{ $doctor_completed_appointment_count }}
                 </h3>
                 </div>
-        
-                <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-red-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        5.6%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">7</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
-                </dl>
             </div>
             <!-- End Card -->
         @endif
@@ -116,21 +73,14 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    150
+                    {{ $users_count }}
                 </h3>
                 </div>
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-green-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        1.7%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
+                <dt class="pe-3 text-center">
+                    <span class="text-sm font-semibold text-gray-800">5</span>
+                    <span class="block text-sm text-gray-500">last month</span>
                 </dt>
                 <dd class="text-start ps-3">
                     <span class="text-sm font-semibold text-gray-800">5</span>
@@ -149,27 +99,20 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    25
+                    {{ $doctors_count}}
                 </h3>
                 </div>
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-green-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        5.6%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">7</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
-                </dl>
+                    <dt class="pe-3 text-center">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last month</span>
+                    </dt>
+                    <dd class="text-start ps-3">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last week</span>
+                    </dd>
+                    </dl>
             </div>
             <!-- End Card -->
         
@@ -182,26 +125,18 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    4
+                    {{ $patients_count }}
                 </h3>
                 </div>
-        
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-red-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        5.6%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">7</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
+                    <dt class="pe-3 text-center">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last month</span>
+                    </dt>
+                    <dd class="text-start ps-3">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last week</span>
+                    </dd>
                 </dl>
             </div>
             <!-- End Card -->
@@ -215,26 +150,19 @@
         
                 <div class="text-center">
                 <h3 class="text-3xl sm:text-4xl lg:text-5xl font-semibold text-gray-800">
-                    4
+                    {{ $appointments_count }}
                 </h3>
                 </div>
         
                 <dl class="flex justify-center items-center divide-x divide-gray-200">
-                <dt class="pe-3">
-                    <span class="text-red-600">
-                    <svg class="inline-block size-4 self-center" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
-                    </svg>
-                    <span class="inline-block text-sm">
-                        5.6%
-                    </span>
-                    </span>
-                    <span class="block text-sm text-gray-500">change</span>
-                </dt>
-                <dd class="text-start ps-3">
-                    <span class="text-sm font-semibold text-gray-800">7</span>
-                    <span class="block text-sm text-gray-500">last week</span>
-                </dd>
+                    <dt class="pe-3 text-center">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last month</span>
+                    </dt>
+                    <dd class="text-start ps-3">
+                        <span class="text-sm font-semibold text-gray-800">5</span>
+                        <span class="block text-sm text-gray-500">last week</span>
+                    </dd>
                 </dl>
             </div>
             <!-- End Card -->
