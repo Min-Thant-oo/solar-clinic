@@ -172,7 +172,7 @@
                                         <div class="flex items-center gap-x-4">
                                             <img class="shrink-0 size-[38px] rounded-lg" src="https://images.unsplash.com/photo-1572307480813-ceb0e59d8325?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=320&q=80" alt="Product Image">
                                             <div>
-                                            <span class="block text-sm font-semibold text-gray-800">Brown Hat</span>
+                                            <span class="block text-sm font-semibold text-gray-800">{{ $appointment->patient->name}}</span>
                                             </div>
                                         </div>
                                         </a>

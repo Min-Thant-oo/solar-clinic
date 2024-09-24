@@ -41,7 +41,7 @@ Route::group(['middleware' => 'patient'], function() {
 Route::group(['middleware' => 'doctor'], function() {
     
     Route::get('/doctor/dashboard', )->name('doctor-dashboard');
-    Route::get('/doctor/appointments', )->name('doctor-appointments');
+    Route::get('/doctor/appointments', AllAppointments::class)->name('doctor-appointments');
     Route::get('/doctor/schedules', SchedulesComponent::class)->name('doctor-schedules');
     Route::get('/doctor/schedules/create', SchedulesCreateForm::class)->name('doctor-schedules-create');
     Route::get('/doctor/schedules/edit/{id}', SchedulesEditForm::class)->name('doctor-schedules-edit');
@@ -74,6 +74,7 @@ Route::group(['middleware' => 'admin'], function() {
     Route::get('/admin/specialites/create', SpecialityForm::class)->name('admin-specialities-create');
     Route::get('/admin/specialities/edit/{id}', EditSpecialityForm::class)->name('admin-specialities-edit');
 
+    Route::get('/admin/appointments', AllAppointments::class)->name('admin-appointments');
 });
 
 require __DIR__.'/auth.php';
