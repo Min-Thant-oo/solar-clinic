@@ -2,14 +2,18 @@
 
 namespace App\Livewire;
 
+use App\Jobs\SendAppointmentCreatedEmail;
+use App\Mail\AppointmentCreated;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use App\Models\DoctorSchedule;
+use App\Models\User;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Illuminate\Support\Facades\Mail;
+
 
 class BookingComponent extends Component
 {
@@ -34,9 +38,45 @@ class BookingComponent extends Component
             'appointment_time'  => $slot,
         ]);
 
+        $patientEmailData = [
+            'date'                  => $this->selectedDate,
+            'time'                  => Carbon::parse($slot)->format('H:i A'),
+            'patient_name'          => auth()->user()->name,
+            'patient_email'         => auth()->user()->email,
+            'doctor_name'           => $this->doctor_details->doctorUser->name,
+            'doctor_email'          => $this->doctor_details->doctorUser->email,
+            'doctor_specialization' => $this->doctor_details->speciality->speciality_name,
+        ];
+        
+        $doctorEmailData = [
+            'date'                  => $this->selectedDate,
+            'time'                  => Carbon::parse($slot)->format('H:i A'),
+            'patient_name'          => auth()->user()->name,
+            'patient_email'         => auth()->user()->email,
+            'doctor_name'           => $this->doctor_details->doctorUser->name,
+            'doctor_email'          => $this->doctor_details->doctorUser->email,
+            'doctor_specialization' => $this->doctor_details->speciality->speciality_name,
+        ];
+        
+        $adminEmailData = [
+            'date'                  => $this->selectedDate,
+            'time'                  => Carbon::parse($slot)->format('H:i A'),
+            'patient_name'          => auth()->user()->name,
+            'patient_email'         => auth()->user()->email,
+            'doctor_name'           => $this->doctor_details->doctorUser->name,
+            'doctor_email'          => $this->doctor_details->doctorUser->email,
+            'doctor_specialization' => $this->doctor_details->speciality->speciality_name,
+            'admin_email'           => User::where('role', 2)->pluck('email')->first(),
+        ];
+
+        SendAppointmentCreatedEmail::dispatch($patientEmailData, $doctorEmailData, $adminEmailData);
+
         session()->flash('message', 'Your appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate. $slot.' has been confirmed successfully!');
         return $this->redirectRoute('patient.appointments.index', navigate:true);
+    
     }
+
+    
 
     public function fetchAvailableDates($doctor) {
         $schedules = DoctorSchedule::where('doctor_id', $doctor->id)->get();
@@ -100,7 +140,7 @@ class BookingComponent extends Component
             $this->timeSlots = [];
         }
     }
-    
+
     public function render()
     {
         return view('livewire.booking-component', [

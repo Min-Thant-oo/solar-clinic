@@ -21,6 +21,8 @@ use App\Livewire\SpecialitiesComponent;
 use App\Livewire\SpecialityForm;
 use App\Livewire\StatisticComponent;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+
 
 Route::view('/', 'welcome')->name('home');
 Route::get('/filter-by-speciality/{id}', DoctorBySpeciality::class);
@@ -79,5 +81,6 @@ Route::group(['middleware' => 'admin'], function() {
 
     Route::get('/admin/appointments', AllAppointments::class)->name('admin-appointments');
 });
+
 
 require __DIR__.'/auth.php';
