@@ -9,7 +9,7 @@
 
     <!-- Card -->
     <div class="flex flex-col">
-      <div class="-m-1.5 overflow-x-auto">
+      <div class="-m-1.5">
         <div class="p-1.5 min-w-full inline-block align-middle">
           <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
             <!-- Header -->
@@ -73,6 +73,11 @@
                       Years of Experience
                      </span>
                   </th>
+                  <th scope="col" class="px-6 py-3 text-start border-s border-gray-200">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                      Feature
+                     </span>
+                  </th>
                   <th scope="col" colspan="2" class=" px-6 py-3 text-start border-s border-gray-200">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
                       Actions
@@ -117,6 +122,19 @@
                       <td class="h-px w-auto whitespace-nowrap">
                         <div class="px-6 py-2 flex items-center gap-x-3">
                           <span class="text-sm text-gray-600">{{$doctor->experience}}</span>
+                        </div>
+                      </td>
+                      <td class="h-px w-auto whitespace-nowrap">
+                        <div class="px-6 py-2 flex items-center gap-x-3">
+                          
+                          <input 
+                            wire:click="featured({{$doctor->id}})"
+                            type="checkbox" 
+                            {{ $doctor->is_featured ? 'checked' : '' }}
+                            id="hs-basic-usage" 
+                            class="relative w-[3.25rem] h-7 focus:outline-none p-px bg-gray-100 border-transparent text-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 focus:ring-blue-600 disabled:opacity-50 disabled:pointer-events-none checked:bg-none checked:text-blue-600 checked:border-blue-600 focus:checked:border-blue-600 before:inline-block before:size-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:rounded-full before:shadow before:transform before:ring-0 before:transition before:ease-in-out before:duration-200"
+                          >
+                          <label for="hs-basic-usage" class="sr-only">switch</label>
                         </div>
                       </td>
                       <td class="h-px w-auto whitespace-nowrap">

@@ -105,11 +105,23 @@
                                     </p>
                                 </div>
                                 </div>
+                                
+                                
+
+                                @if($doctor->is_featured)
+                                <div class="mt-3">
+                                    <p class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-md text-xs font-bold bg-blue-200 text-gray-800">
+                                      Featured
+                                    </p>
+                                </div>
+                                {{-- @else
+                                    fe --}}
+                                @endif
                         
                                 <p class="mt-3 text-gray-500">
                                 {{ $doctor->bio }}
                                 </p>
-                        
+                                
                                 <div class="flex items-center justify-between gap-5 mt-5">
                                     <!-- Social Brands -->
                                     <div class=" space-x-1">

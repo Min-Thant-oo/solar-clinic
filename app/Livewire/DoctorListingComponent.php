@@ -15,6 +15,14 @@ class DoctorListingComponent extends Component
     public function mount() {
         $this->doctors = Doctor::with('speciality', 'doctorUser')->get();
     }
+
+    public function featured($id) {
+        $doctor = Doctor::find($id);
+    
+        $doctor->update([
+            'is_featured' => !$doctor->is_featured
+        ]);
+    }    
     
     public function render()
     {
