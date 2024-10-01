@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('speciality_id')->constrained()->cascadeOnDelete();
             $table->string('bio')->nullable();
             $table->integer('experience')->nullable();
+            // 0 - not featured. 1 - featured
+            $table->integer('is_featured')->default(0);
             $table->string('twitter')->nullable();
             $table->string('instagram')->nullable();
             $table->timestamps();

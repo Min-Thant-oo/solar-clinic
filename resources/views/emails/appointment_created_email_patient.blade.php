@@ -1,6 +1,7 @@
 @component('mail::message')
     # Appointment Confirmation
 
+    Hi {{ $patientEmailData['patient_name'] }},
 
     An appointment has been successfully scheduled with the following details:
 

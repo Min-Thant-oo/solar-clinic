@@ -13,7 +13,7 @@ class FeaturedDoctors extends Component
     public $featuredDoctors;
 
     public function mount() {
-        $this->featuredDoctors = Doctor::with('speciality', 'doctorUser')->get();
+        $this->featuredDoctors = Doctor::with('speciality', 'doctorUser')->where('is_featured', 1)->get();
     }
     public function render()
     {

@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DoctorController;
 use App\Livewire\AdminDashboard;
 use App\Livewire\AllAppointments;
+use App\Livewire\AllDoctors;
 use App\Livewire\BookingComponent;
 use App\Livewire\DoctorCreate;
 use App\Livewire\DoctorBySpeciality;
@@ -29,6 +30,9 @@ Route::get('/filter-by-speciality/{id}', DoctorBySpeciality::class);
 
 Route::view('profile', 'profile')->middleware(['auth'])->name('profile');
 
+Route::get('/all-doctors', AllDoctors::class)->name('patient.doctors.index');
+
+
 // Patient routes
 Route::group(['middleware' => 'patient'], function() {
     Route::view('dashboard', 'dashboard')
@@ -37,6 +41,8 @@ Route::group(['middleware' => 'patient'], function() {
 
     Route::get('/patient/appointments', AllAppointments::class)->name('patient.appointments.index');
     Route::get('/patient/booking/{id}', BookingComponent::class)->name('patient.appointments.book');
+
+    // Route::get('/all-doctors', AllDoctors::class)->name('patient.doctors.index');
 
     Route::get('/articles', PatientArticlePage::class)->name('articles');
 });

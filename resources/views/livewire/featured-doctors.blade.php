@@ -58,7 +58,7 @@
       @else
           
       @endif
-      <a class="flex flex-col justify-center p-4 text-center border border-gray-200 border-dashed col-span-full lg:col-span-1 group rounded-xl md:p-6 hover:shadow-sm focus:outline-none focus:shadow-sm" href="#">
+      <a href="{{ route('patient.doctors.index') }}" class="flex flex-col justify-center p-4 text-center border border-gray-200 border-dashed col-span-full lg:col-span-1 group rounded-xl md:p-6 hover:shadow-sm focus:outline-none focus:shadow-sm">
         <h3 class="text-lg text-gray-800">
           Explore More!
         </h3>

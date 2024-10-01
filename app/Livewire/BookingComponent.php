@@ -66,6 +66,7 @@ class BookingComponent extends Component
             'doctor_name'           => $this->doctor_details->doctorUser->name,
             'doctor_email'          => $this->doctor_details->doctorUser->email,
             'doctor_specialization' => $this->doctor_details->speciality->speciality_name,
+            'admin_name'           => User::where('role', 2)->pluck('name')->first(),
             'admin_email'           => User::where('role', 2)->pluck('email')->first(),
         ];
 
