@@ -1,0 +1,31 @@
+@component('mail::message')
+    # Appointment Cancelled
+
+    Hi Dr.{{ $doctorEmailData['doctor_name'] }},
+
+    An appointment has been CANCELLED with the following details:
+
+    ## Cancelled by:
+    - **Name:** {{ 
+        $doctorEmailData['role'] == 0 ? $doctorEmailData['cancelled_by'] : 
+        ($doctorEmailData['role'] == 1 ? 'Dr.' . $doctorEmailData['doctor_name'] : 'Solar Clinic') 
+    }}
+
+    ### Appointment Details:
+    - **Date:** {{ $doctorEmailData['date'] }}
+    - **Time:** {{ $doctorEmailData['time'] }}
+
+    ### Patient Details:
+    - **Name:** {{ $doctorEmailData['patient_name'] }}
+    - **Email:** {{ $doctorEmailData['patient_email'] }}
+
+    ### Doctor Details:
+    - **Name:** Dr.{{ $doctorEmailData['doctor_name'] }}
+    - **Specialization:** {{ $doctorEmailData['doctor_specialization'] }}
+    - **Email:** {{ $doctorEmailData['doctor_email'] }}
+
+    Thanks,
+    Solar Clinic
+
+        
+@endcomponent

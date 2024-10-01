@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail;
+namespace App\Mail\Create;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,18 +11,18 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Mail\Mailables\Address;
 
 
-class AppointmentCreatedEmailDoctor extends Mailable
+class AppointmentCreatedEmailPatient extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $doctorEmailData;
+    public $patientEmailData;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($doctorEmailData)
+    public function __construct($patientEmailData)
     {
-        $this->doctorEmailData = $doctorEmailData;
+        $this->patientEmailData = $patientEmailData;
     }
 
     /**
@@ -42,9 +42,9 @@ class AppointmentCreatedEmailDoctor extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.appointment_created_email_doctor',
+            markdown: 'emails.create.appointment_created_email_patient',
             with: [
-                'doctorEmailData' => $this->doctorEmailData,
+                'patientEmailData' => $this->patientEmailData,
             ]
         );
     }

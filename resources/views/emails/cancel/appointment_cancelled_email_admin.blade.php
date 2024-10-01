@@ -1,9 +1,15 @@
 @component('mail::message')
-    # Appointment Confirmation
+    # Appointment Cancelled
 
-    Hi {{ $adminEmailData['admin_name'] }}
+    Hi {{ $adminEmailData['admin_name'] }},
 
-    An appointment has been successfully scheduled with the following details:
+    An appointment has been CANCELLED with the following details:
+
+    ## Cancelled by:
+    - **Name:** {{ 
+        $adminEmailData['role'] == 0 ? $adminEmailData['cancelled_by'] : 
+        ($adminEmailData['role'] == 1 ? 'Dr.' . $adminEmailData['doctor_name'] : 'Solar Clinic') 
+    }}
 
     ### Appointment Details:
     - **Date:** {{ $adminEmailData['date'] }}
@@ -19,7 +25,7 @@
     - **Email:** {{ $adminEmailData['doctor_email'] }}
     
     ## Admin Notification
-    You are receiving this email because an appointment has been scheduled in your system.
+    You are receiving this email because an appointment has been cancelled in your system.
 
     Thanks,
     Solar Clinic
