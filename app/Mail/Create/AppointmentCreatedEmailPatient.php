@@ -31,8 +31,7 @@ class AppointmentCreatedEmailPatient extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('no-reply@solarclinic.com', 'Solar Clinic'),
-            subject: 'Your Appointment at Solar Clinic',
+            subject: 'New Appointment Scheduled',
         );
     }
 

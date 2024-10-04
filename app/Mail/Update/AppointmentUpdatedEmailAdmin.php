@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mail\Create;
+namespace App\Mail\Update;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -8,21 +8,19 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Mail\Mailables\Address;
 
-
-class AppointmentCreatedEmailDoctor extends Mailable
+class AppointmentUpdatedEmailAdmin extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $doctorEmailData;
+    public $adminEmailData;
 
     /**
-     * Create a new message instance.
+     * Create a new job instance.
      */
-    public function __construct($doctorEmailData)
+    public function __construct($adminEmailData)
     {
-        $this->doctorEmailData = $doctorEmailData;
+        $this->adminEmailData = $adminEmailData;
     }
 
     /**
@@ -31,7 +29,7 @@ class AppointmentCreatedEmailDoctor extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Appointment Scheduled',
+            subject: 'Appointment Rescheduled',
         );
     }
 
@@ -41,9 +39,9 @@ class AppointmentCreatedEmailDoctor extends Mailable
     public function content(): Content
     {
         return new Content(
-            markdown: 'emails.create.appointment_created_email_doctor',
+            markdown: 'emails.update.appointment_updated_email_admin',
             with: [
-                'doctorEmailData' => $this->doctorEmailData,
+                'adminEmailData' => $this->adminEmailData,
             ]
         );
     }

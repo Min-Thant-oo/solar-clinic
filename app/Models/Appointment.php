@@ -23,5 +23,17 @@ class Appointment extends Model
     public function patient() {
         // appointments table mr shi tae 'patient_id' nae User Model nae chate tae. 
         return $this->belongsTo(User::class, 'patient_id');
+    }   
+
+    public function scopeSearch($query, $value) {
+        return $query->whereHas('doctor.doctorUser', function($q) use ($value) {
+                $q->where('name', 'like', "%{$value}%")
+                  ->orWhere('email', 'like', "%{$value}%");
+            })
+            ->orWhereHas('patient', function($q) use ($value) {
+                $q->where('name', 'like', "%{$value}%")
+                  ->orWhere('email', 'like', "%{$value}%");
+            });
     }
+    
 }

@@ -1,26 +1,29 @@
-@component('mail::message')
-    # Appointment Confirmation
+<x-mail::message>
+# Appointment Confirmation
 
-    Hi Dr.{{ $doctorEmailData['doctor_name'] }},
-    
-    An appointment has been successfully scheduled with the following details:
+Hi Dr.{{ $doctorEmailData['doctor_name'] }},
 
-    ### Appointment Details:
-    - **Date:** {{ $doctorEmailData['date'] }}
-    - **Time:** {{ $doctorEmailData['time'] }}
+An appointment has been scheduled with the following details:
 
-    ### Patient Details:
-    - **Name:** {{ $doctorEmailData['patient_name'] }}
-    - **Email:** {{ $doctorEmailData['patient_email'] }}
+### Appointment Details:
+- **Date:** {{ $doctorEmailData['date'] }}
+- **Time:** {{ $doctorEmailData['time'] }}
 
-    ### Doctor Details:
-    - **Name:** Dr.{{ $doctorEmailData['doctor_name'] }}
-    - **Specialization:** {{ $doctorEmailData['doctor_specialization'] }}
-    - **Email:** {{ $doctorEmailData['doctor_email'] }}
-    
-    ## Doctor Notification
-    You have a new appointment scheduled. Please review the details and prepare accordingly.
+### Patient Details:
+- **Name:** {{ $doctorEmailData['patient_name'] }}
+- **Email:** {{ $doctorEmailData['patient_email'] }}
 
-    Thanks,
-    Solar Clinic
+### Doctor Details:
+- **Name:** Dr.{{ $doctorEmailData['doctor_name'] }}
+- **Specialization:** {{ $doctorEmailData['doctor_specialization'] }}
+- **Email:** {{ $doctorEmailData['doctor_email'] }}
+
+@component('mail::button', ['url' => 'http://127.0.0.1:8000/login'])
+View Appointment
 @endcomponent
+
+You have a new appointment scheduled. Please review the details and prepare accordingly.
+
+Thanks,<br>
+{{ config('app.name') }}
+</x-mail::message>

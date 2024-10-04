@@ -26,7 +26,14 @@
                       <div class="sm:col-span-1">
                         <label for="hs-as-table-product-review-search" class="sr-only">Search</label>
                         <div class="relative">
-                          <input type="text" id="hs-as-table-product-review-search" name="hs-as-table-product-review-search" class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" placeholder="Search">
+                          <input 
+                            title="Search"
+                            wire:model.live.debounce.300ms="search"
+                            type="text" id="hs-as-table-product-review-search" 
+                            name="hs-as-table-product-review-search" 
+                            class="py-2 px-3 ps-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none" 
+                            placeholder="Search"
+                          >
                           <div class="absolute inset-y-0 start-0 flex items-center pointer-events-none ps-4">
                             <svg class="shrink-0 size-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                           </div>
@@ -34,7 +41,7 @@
                       </div>
                       <!-- End Input -->
         
-                      <div class="sm:col-span-2 md:grow">
+                      {{-- <div class="sm:col-span-2 md:grow">
                         <div class="flex justify-end gap-x-2">
                           <div class="hs-dropdown [--placement:bottom-right] relative inline-block">
                             <button id="hs-as-table-table-export-dropdown" type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none" aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
@@ -108,8 +115,10 @@
                               </div>
                             </div>
                           </div>
+
                         </div>
-                      </div>
+                      </div> --}}
+                      
                     </div>
                     <!-- End Header -->
         
@@ -119,26 +128,40 @@
 
 
                     <tr>
+
+                      <th scope="col" class="px-6 py-3 text-start">
+                        <div class="flex items-center justify-center gap-x-2">
+                          <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                            ID
+                          </span>
+                        </div>
+                      </th>
                         
                         @if (auth()->check() && auth()->user()->role == 0)
                             
                         @else
                             <th scope="col" class="px-6 py-3 text-start">
-                                <div class="flex items-center gap-x-2">
+                                <div class="flex items-center gap-x-">
                                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                                    Patient Name
+                                    Patient
                                 </span>
                                 </div>
                             </th>
                         @endif
         
-                        <th scope="col" class="px-6 py-3 text-start">
-                          <div class="flex items-center gap-x-2">
-                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
-                              Doctor
-                            </span>
-                          </div>
-                        </th>
+                        @if (auth()->check() && auth()->user()->role == 1)
+
+                        @else
+                          <th scope="col" class="px-6 py-3 text-start">
+                            <div class="flex items-center gap-x-2">
+                              <span class="text-xs font-semibold uppercase tracking-wide text-gray-800">
+                                Doctor
+                              </span>
+                            </div>
+                          </th>
+                        @endif
+        
+                        
         
                         <th scope="col" class="px-6 py-3 text-start">
                           <div class="flex items-center gap-x-2">
@@ -177,78 +200,111 @@
                     <tbody class="divide-y divide-gray-200">
                         @forelse ($all_appointments as $appointment)
                             <tr class="bg-white hover:bg-gray-50">
+                              
+                              <td class="size-px whitespace-nowrap text-center">
+                                {{ $loop->iteration }}
+                              </td>
+
+                              {{-- <td class=" ">
+                                <div class="">
+                                  {{ $loop->iteration }}
+                                </div>
+                            </td> --}}
+
                                 @if (auth()->check() && auth()->user()->role == 0)
                                     
                                 @else
                                     <td class="size-px whitespace-nowrap align-top">
                                         <a class="block p-6" href="#">
-                                        <div class="flex items-center gap-x-4">
-                                            <img class="shrink-0 size-[38px] rounded-lg" src="https://images.unsplash.com/photo-1572307480813-ceb0e59d8325?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=320&q=80" alt="Product Image">
-                                            <div>
-                                            <span class="block text-sm font-semibold text-gray-800">{{ $appointment->patient->name}}</span>
-                                            </div>
-                                        </div>
+                                          <div class="flex items-center gap-x-4">
+                                              <img class="shrink-0 size-[38px] rounded-lg" src="https://images.unsplash.com/photo-1572307480813-ceb0e59d8325?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=320&h=320&q=80" alt="Product Image">
+                                              <div class="grow">
+                                                <span class="block text-sm font-semibold text-gray-800">{{ $appointment->patient->name}}</span>
+                                                <span class="block text-sm text-gray-500">{{$appointment->patient->email}}</span>
+                                              </div>
+                                          </div>
                                         </a>
                                     </td>    
                                 @endif
-                                
-                                <td class="size-px whitespace-nowrap align-top">
-                                <a class="block p-6" href="#">
-                                    <div class="flex items-center gap-x-3">
-                                    <img class="inline-block size-[38px] rounded-full" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Product Image">
-                                    <div class="grow">
-                                        <span class="block text-sm font-semibold text-gray-800">{{$appointment->doctor->doctorUser->name}}</span>
-                                        <span class="block text-sm text-gray-500">{{$appointment->doctor->doctorUser->email}}</span>
-                                    </div>
-                                    </div>
-                                </a>
-                                </td>
+
+                                @if (auth()->check() && auth()->user()->role == 1)
+
+                                @else
+                                  <td class="size-px whitespace-nowrap align-top">
+                                    <a class="block p-6" href="#">
+                                        <div class="flex items-center gap-x-3">
+                                          <img class="inline-block size-[38px] rounded-full" src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80" alt="Product Image">
+                                          <div class="grow">
+                                              <span class="block text-sm font-semibold text-gray-800">{{$appointment->doctor->doctorUser->name}}</span>
+                                              <span class="block text-sm text-gray-500">{{$appointment->doctor->doctorUser->email}}</span>
+                                          </div>
+                                        </div>
+                                    </a>
+                                  </td>
+                                @endif
+
                                 <td class="h-px w-72 min-w-72 align-top">
-                                <a class="block p-6" href="#">
-                                    <span class="block text-sm font-semibold text-gray-800">{{ date('d/m/Y', strtotime($appointment->appointment_date))}}</span>
-                                    {{-- <span class="block text-sm text-gray-500">I bought this hat for my boyfriend, but then i found out he cheated on me so I kept it and I love it!! I wear it all the time and there is no problem with the fit even though its a mens" hat.</span> --}}
-                                </a>
+                                  <a class="block p-6" href="#">
+                                      <span class="block text-sm font-semibold text-gray-800">{{ date('d M Y D', strtotime($appointment->appointment_date))}}</span>
+                                      {{-- <span class="block text-sm text-gray-500">I bought this hat for my boyfriend, but then i found out he cheated on me so I kept it and I love it!! I wear it all the time and there is no problem with the fit even though its a mens" hat.</span> --}}
+                                  </a>
                                 </td>
                                 <td class="size-px whitespace-nowrap align-top">
-                                <a class="block p-6" href="#">
-                                    <span class="text-sm font-semibold text-gray-600">{{date('H:i', strtotime($appointment->appointment_time))}}</span>
-                                </a>
+                                  <a class="block p-6" href="#">
+                                      <span class="text-sm font-semibold text-gray-600">{{ \Carbon\Carbon::parse($appointment->appointment_time)->format('g:i A') }}
+                                      </span>
+                                  </a>
                                 </td>
                                 <td class="size-px whitespace-nowrap align-top">
-                                  
-                                <div class="block p-6">
-                                  @if ($appointment->is_completed == 1)
-                                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
-                                    <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
-                                    </svg>
-                                      Completed
-                                    </span>
-                                      
-                                  @else
-                                    <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
-                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                      </svg>                                      
-                                        Pending
-                                    </span>
-                                      
-                                  @endif
-                                </div>
+                                  <div class="block p-6">
+                                    @if ($appointment->is_completed == 1)
+                                      <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-teal-100 text-teal-800 rounded-full">
+                                      <svg class="size-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                      </svg>
+                                        Completed
+                                      </span>
+                                        
+                                    @else
+                                      <span class="py-1 px-1.5 inline-flex items-center gap-x-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                          <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                        </svg>                                      
+                                          Pending
+                                      </span>
+                                        
+                                    @endif
+                                  </div>
                                 </td>
                                 <td class="size-px whitespace-nowrap align-top">
                                   
                                 <div class="p-6 flex gap-5">
-                                  <a href="" class="bg-yellow-100 text-yellow-800 rounded-full" title="Reschedule">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                                      <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-                                    </svg>
-                                  </a>
+
+                                  @if (auth()->user()->role == 0)
+                                    <a href="/patient/reschedule/{{$appointment->id}}" class="bg-yellow-100 text-yellow-800 rounded" title="Reschedule">
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                      </svg>
+                                    </a>
+                                  @elseif(auth()->user()->role == 1)
+                                    <a href="/doctor/reschedule/{{$appointment->id}}" class="bg-yellow-100 text-yellow-800 rounded" title="Reschedule">
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                      </svg>
+                                    </a>
+                                  @else
+                                    <a href="/admin/reschedule/{{$appointment->id}}" class="bg-yellow-100 text-yellow-800 rounded" title="Reschedule">
+                                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                      </svg>
+                                    </a>
+                                  @endif
+
                                   <button 
                                     class="bg-red-100 text-red-800 rounded-full" 
                                     title="Cancel"
                                     wire:click='cancel({{ $appointment->id}})'
-                                    wire:confirm='Are you sure you want to cancel your appointment with Dr. {{$appointment->doctor->doctorUser->name}} on {{ date('d/m/Y', strtotime($appointment->appointment_date))}} at {{date('H:i', strtotime($appointment->appointment_time))}}?'
+                                    wire:confirm='Are you sure you want to cancel your appointment with Dr. {{$appointment->doctor->doctorUser->name}} on {{ date('d M Y D', strtotime($appointment->appointment_date))}} at {{date('g:i A', strtotime($appointment->appointment_time))}}?'
                                     >
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                                       <path stroke-linecap="round" stroke-linejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -269,17 +325,16 @@
                   <!-- Footer -->
                   <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200">
                     <div class="max-w-sm space-y-3">
-                      <select class="py-2 px-3 pe-9 block border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option selected>5</option>
-                        <option>6</option>
+                      <select wire:model.live='perPage' class="py-2 px-3 pe-9 block border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50" >50</option>
+                        <option value="100">100</option>
                       </select>
                     </div>
         
-                    <div>
+                    {{-- <div>
                       <div class="inline-flex gap-x-2">
                         <button type="button" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none">
                           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
@@ -291,9 +346,12 @@
                           <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
                         </button>
                       </div>
-                    </div>
+                    </div> --}}
+                    
+                    {{ $all_appointments->links()}}
                   </div>
                   <!-- End Footer -->
+                  
                 </div>
               </div>
             </div>

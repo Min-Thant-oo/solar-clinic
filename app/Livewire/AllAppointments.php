@@ -6,34 +6,42 @@ use App\Models\User;
 use App\Models\Doctor;
 use Livewire\Component;
 use App\Models\Appointment;
+use Livewire\Attributes\Url;
+use Livewire\WithPagination; 
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Layout;
+use Illuminate\Support\Facades\Auth;
 use App\Jobs\SendAppointmentCancelledEmail;
 
 class AllAppointments extends Component
 {
-    #[Layout('layouts.app')]
 
-    // public $all_appointments;
-    public $perPage = 15;
+    use WithPagination;
+
+    #[Layout('layouts.app')]
+    
+    #[Url()]
+    public $perPage = 10;
+
+    #[Url()]
     public $search = '';
 
-    // public function mount() {
-        // $this->all_appointments = Appointment::with('doctor','patient')->paginate(10);
-    // }
+    public function updatingSearch() {
+        $this->resetPage();
+    }
 
     public function cancel($id) {
-        // try {
+        try {
             $appointment = Appointment::findOrFail($id);
 
             $patient = User::find( $appointment->patient_id);
             $doctor = Doctor::find($appointment->doctor_id);
-            $cancelled_by_details = auth()->user();
+            $cancelled_by_details = Auth::user();
 
 
             $patientEmailData = [
-                'date'                  => $appointment->appointment_date,
-                'time'                  => Carbon::parse($appointment->appointment_time)->format('H:i A'),
+                'date'                  => Carbon::parse($appointment->appointment_date)->format('d M Y D'),
+                'time'                  => Carbon::parse($appointment->appointment_time)->format('g:i A'),
                 'patient_name'          => $patient->name,
                 'patient_email'         => $patient->email,
                 'doctor_name'           => $doctor->doctorUser->name,
@@ -44,8 +52,8 @@ class AllAppointments extends Component
             ];
 
             $doctorEmailData = [
-                'date'                  => $appointment->appointment_date,
-                'time'                  => Carbon::parse($appointment->appointment_time)->format('H:i A'),
+                'date'                  => Carbon::parse($appointment->appointment_date)->format('d M Y D'),
+                'time'                  => Carbon::parse($appointment->appointment_time)->format('g:i A'),
                 'patient_name'          => $patient->name,
                 'patient_email'         => $patient->email,
                 'doctor_name'           => $doctor->doctorUser->name,
@@ -56,8 +64,8 @@ class AllAppointments extends Component
             ];
 
             $adminEmailData = [
-                'date'                  => $appointment->appointment_date,
-                'time'                  => Carbon::parse($appointment->appointment_time)->format('H:i A'),
+                'date'                  => Carbon::parse($appointment->appointment_date)->format('d M Y D'),
+                'time'                  => Carbon::parse($appointment->appointment_time)->format('g:i A'),
                 'patient_name'          => $patient->name,
                 'patient_email'         => $patient->email,
                 'doctor_name'           => $doctor->doctorUser->name,
@@ -75,15 +83,33 @@ class AllAppointments extends Component
 
 
             session()->flash('message', 'Appointment deleted!');
-        // } catch (\Throwable $th) {
-        //     session()->flash('error', 'Failed to delete appointment!');
-        // }
+        } catch (\Throwable $th) {
+            session()->flash('error', 'Failed to delete appointment!');
+        }
     }
 
     public function render()
     {
+        $user = Auth::user();
+    
+        $query = Appointment::search($this->search)
+            ->with('patient', 'doctor')
+            ->latest(); 
+    
+        if ($user) {
+            if ($user->role == 1) {
+                // Role 1: Doctor
+                $doctor = Doctor::where('user_id', $user->id)->first();
+                $query->where('doctor_id', $doctor->id);
+            } elseif ($user->role == 0) {
+                // Role 0: Patient
+                $query->where('patient_id', $user->id);
+            }
+        }
+    
         return view('livewire.all-appointments', [
-            'all_appointments' => Appointment::with('doctor','patient')->paginate(20)
+            'all_appointments' => $query->paginate($this->perPage)
         ]);
     }
+    
 }

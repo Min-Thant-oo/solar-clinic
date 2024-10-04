@@ -93,7 +93,7 @@
                           <div class="px-6 py-2 flex items-center gap-x-3">
                             <span class="text-sm text-gray-600">{{ $loop->iteration }}</span>
                           </div>
-                        </td>
+                      </td>
                       <td class="h-px w-auto whitespace-nowrap">
                         <div class="px-6 py-2 flex items-center gap-x-3">
                           <span class="text-sm text-gray-600">{{$doctor->doctorUser->name}}</span>

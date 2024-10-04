@@ -2,22 +2,20 @@
 
 namespace App\Jobs;
 
-use App\Mail\AppointmentCreatedEmail;
-use App\Mail\Create\AppointmentCreatedEmailAdmin;
-use App\Mail\Create\AppointmentCreatedEmailDoctor;
-use App\Mail\Create\AppointmentCreatedEmailPatient;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Foundation\Queue\Queueable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Mail;
+use App\Mail\Update\AppointmentUpdatedEmailAdmin;
+use App\Mail\Update\AppointmentUpdatedEmailDoctor;
+use App\Mail\Update\AppointmentUpdatedEmailPatient;
 
-class SendAppointmentCreatedEmail implements ShouldQueue
+class SendAppointmentUpdatedEmail implements ShouldQueue
 {
     use Queueable;
 
-    // public $appointmentData;
     public $patientEmailData;
     public $doctorEmailData;
     public $adminEmailData;
@@ -43,13 +41,12 @@ class SendAppointmentCreatedEmail implements ShouldQueue
 
 
         // Send the patient email
-        Mail::to($patient_email)->queue(new AppointmentCreatedEmailPatient($this->patientEmailData));
+        Mail::to($patient_email)->queue(new AppointmentUpdatedEmailPatient($this->patientEmailData));
         
         // Send the doctor email
-        Mail::to($doctor_email)->queue(new AppointmentCreatedEmailDoctor($this->doctorEmailData));
+        Mail::to($doctor_email)->queue(new AppointmentUpdatedEmailDoctor($this->doctorEmailData));
 
         // Send the admin email
-        Mail::to($admin_email)->queue(new AppointmentCreatedEmailAdmin($this->adminEmailData));
+        Mail::to($admin_email)->queue(new AppointmentUpdatedEmailAdmin($this->adminEmailData));
     }
-
 }

@@ -3,15 +3,19 @@
 
 Hi {{ $adminEmailData['admin_name'] }},
 
-An appointment has been <span style="background-color: #FFC107; color: #000000; padding: 2px;">CANCELLED</span> with the following details:
+An appointment has been <span style="background-color: #FFC107; color: #000000; padding: 2px;">RESCHEDULED</span> with the following details:
 
-## Cancelled by:
+## Rescheduled by:
 - **Name:** {{ 
-    $adminEmailData['role'] == 0 ? $adminEmailData['cancelled_by'] : 
-    ($adminEmailData['role'] == 1 ? 'Dr.' . $adminEmailData['cancelled_by'] : 'Solar Clinic') 
+    $adminEmailData['role'] == 0 ? $adminEmailData['rescheduled_by'] : 
+    ($adminEmailData['role'] == 1 ? 'Dr.' . $adminEmailData['rescheduled_by'] : 'Solar Clinic') 
 }}
 
-### Appointment Details:
+### New Appointment Details:
+- **Date:** <span style="background-color: #FFC107; color: #000000; padding-left: 2px; padding-right: 2px;">{{ $adminEmailData['old_appointment_date'] }}</span>
+- **Time:** <span style="background-color: #FFC107; color: #000000; padding-left: 2px; padding-right: 2px;">{{ $adminEmailData['old_appointment_time'] }}</span>
+
+### Old Appointment Details:
 - **Date:** {{ $adminEmailData['date'] }}
 - **Time:** {{ $adminEmailData['time'] }}
 

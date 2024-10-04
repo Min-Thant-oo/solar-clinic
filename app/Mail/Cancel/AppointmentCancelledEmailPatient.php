@@ -28,7 +28,7 @@ class AppointmentCancelledEmailPatient extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Your Appointment at Solar Clinic has been cancelled',
+            subject: 'Appointment Cancelled',
         );
     }
 

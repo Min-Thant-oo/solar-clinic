@@ -13,7 +13,7 @@ class RecentAppointment extends Component
     public $recent_appointments;
 
     public function mount() {
-        $this->recent_appointments = Appointment::with('doctor','patient')->orderBy('created_at', 'DESC')->limit(10)->get();
+        $this->recent_appointments = Appointment::with('doctor','patient')->orderBy('created_at', 'DESC')->limit(5)->get();
     }
     
     public function render()

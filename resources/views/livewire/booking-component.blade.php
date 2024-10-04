@@ -18,49 +18,58 @@
             <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-10 bg-white border my-2  shadow-md">
                 <!-- Grid -->
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
-                <div class="text-center">
-                    {{-- <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/> --}}
-                    <div class="mt-2 sm:mt-4">
-                    <h3 class="text-sm font-medium text-gray-800 sm:text-base lg:text-lg dark:text-neutral-200">
-                        {{$doctor_details->doctorUser->name}}
-                    </h3>
-                    <p class="text-xs text-gray-600 sm:text-sm lg:text-base dark:text-neutral-400">
-                        {{$doctor_details->speciality->speciality_name}} / {{$doctor_details->hospital_name}}
-                    </p>
+
+                    <div class="text-center col-span-1">
+                        {{-- <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/> --}}
+                        <div class="mt-2 sm:mt-4">
+                        <h3 class="text-sm font-medium text-gray-800 sm:text-base lg:text-lg dark:text-neutral-200">
+                            {{$doctor_details->doctorUser->name}}
+                        </h3>
+                        <p class="text-xs text-gray-600 sm:text-sm lg:text-base dark:text-neutral-400">
+                            {{$doctor_details->speciality->speciality_name}} / {{$doctor_details->hospital_name}}
+                        </p>
+                        </div>
                     </div>
-                </div>
-                <!-- End Col -->
-                <div class="text-center">
-                        <h3>Select an Available Date</h3>
-                <input 
-                    placeholder="Select Available date"
-                    type="text" 
-                    id="datepicker" 
-                    autocomplete="off" 
-                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-gray-100"
-                >
-                @if($selectedDate)
-                    <div>
-                        <h4>Selected Date: {{ $selectedDate }}</h4>
+
+                    <div class="col-span-2">
+
+                        <div class="grid grid-cols-2">
+                            <div class="cols-span-1">
+                                <h3 class="text-center mb-2">Select an Available Date</h3>
+                                <input 
+                                    placeholder="Select Available date"
+                                    type="text" 
+                                    id="datepicker" 
+                                    autocomplete="off" 
+                                    class="py-3 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none bg-gray-100"
+                                >
+                            </div>
+                        
+
+                            <div class="col-span-2">
+                                @if ($selectedDate)
+                                    @if ($timeSlots)
+                                        <h2 class="text-md mt-3 mb-1">Available Time Slots for {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}:</h2>
+                                    @endif
+                                    <div class="flex flex-wrap">
+                                        @forelse ($timeSlots as $slot)
+                                            <button 
+                                                class="m-2 ml-0 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                                                type="button"
+                                                wire:click="bookAppointment('{{ $slot }}')"
+                                                wire:confirm="Book appointment at {{\Carbon\Carbon::parse($slot)->format('g:i A')}} on {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}?"
+                                            >
+                                                {{ date('g:i A',strtotime($slot)) }}                 
+                                            </button>
+                                        @empty
+                                            <h3 class="mt-3 text-md">*No available slots for the selected date: {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}</h3>
+
+                                        @endforelse
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
                     </div>
-                @endif
-                <div>
-                    <h2 class="text-xl font-bold mb-2">Available Time Slots</h2>
-                    <div class="flex flex-wrap">
-                        @foreach ($timeSlots as $slot)
-                            <button 
-                                class="m-2 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                type="button"
-                                wire:click="bookAppointment('{{ $slot }}')"
-                                wire:confirm="Book appointment on {{ $selectedDate }}, {{ $slot }} ?"
-                            >
-                                {{ date('H:i',strtotime($slot)) }}                 
-                            </button>
-                        @endforeach
-                    </div>
-                </div>
-                </div>
-                <!-- End Col -->
                 </div>
                 <!-- End Grid -->
             </div>

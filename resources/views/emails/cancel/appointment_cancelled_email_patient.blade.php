@@ -1,31 +1,29 @@
-@component('mail::message')
-    # Appointment Cancelled
+<x-mail::message>
+# Appointment Cancelled
 
-    Hi {{ $patientEmailData['patient_name'] }},
+Hi {{ $patientEmailData['patient_name'] }},
 
-    An appointment has been CANCELLED with the following details:
+An appointment has been <span style="background-color: #FFC107; color: #000000; padding: 2px;">CANCELLED</span> with the following details:
 
-    ## Cancelled by:
-    - **Name:** {{ 
-        $patientEmailData['role'] == 0 ? $patientEmailData['cancelled_by'] : 
-        ($patientEmailData['role'] == 1 ? 'Dr.' . $patientEmailData['doctor_name'] : 'Solar Clinic') 
-    }}
+## Cancelled by:
+- **Name:** {{ 
+    $patientEmailData['role'] == 0 ? $patientEmailData['cancelled_by'] : 
+    ($patientEmailData['role'] == 1 ? 'Dr.' . $patientEmailData['cancelled_by'] : 'Solar Clinic') 
+}}
 
-    ### Appointment Details:
-    - **Date:** {{ $patientEmailData['date'] }}
-    - **Time:** {{ $patientEmailData['time'] }}
+### Appointment Details:
+- **Date:** {{ $patientEmailData['date'] }}
+- **Time:** {{ $patientEmailData['time'] }}
 
-    ### Patient Details:
-    - **Name:** {{ $patientEmailData['patient_name'] }}
-    - **Email:** {{ $patientEmailData['patient_email'] }}
+### Patient Details:
+- **Name:** {{ $patientEmailData['patient_name'] }}
+- **Email:** {{ $patientEmailData['patient_email'] }}
 
-    ### Doctor Details:
-    - **Name:** Dr.{{ $patientEmailData['doctor_name'] }}
-    - **Specialization:** {{ $patientEmailData['doctor_specialization'] }}
-    - **Email:** {{ $patientEmailData['doctor_email'] }}
+### Doctor Details:
+- **Name:** Dr.{{ $patientEmailData['doctor_name'] }}
+- **Specialization:** {{ $patientEmailData['doctor_specialization'] }}
+- **Email:** {{ $patientEmailData['doctor_email'] }}
 
-    Thanks,
-    Solar Clinic
-
-        
-@endcomponent
+Thanks,<br>
+{{ config('app.name') }}
+</x-mail::message>

@@ -10,37 +10,52 @@ use App\Models\DoctorSchedule;
 use Illuminate\Support\Carbon;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Layout;
-use App\Mail\AppointmentCreated;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use App\Jobs\SendAppointmentCreatedEmail;
+use App\Jobs\SendAppointmentUpdatedEmail;
 
-
-class BookingComponent extends Component
+class RescheduleForm extends Component
 {
     #[Title('Appointment Booking')]
     #[Layout('layouts.app')]
+    
     public $doctor_details;
+    public $patient_details;
+    public $old_appointment_date;
+    public $old_appointment_time;
     public $selectedDate;
+    public $appointment;
     public $availableDates = [];
     public $timeSlots = [];
 
     public function mount($id) {
-        $this->doctor_details = Doctor::with('speciality', 'doctorUser')->where('id', $id)->first();
+        $this->appointment = Appointment::find($id);
+        $this->old_appointment_date = $this->appointment->appointment_date;
+        $this->old_appointment_time = $this->appointment->appointment_time;
+
+        // dd($this->old_appointment_date, $this->old_appointment_time);
+
+        $this->patient_details = User::where('id', $this->appointment->patient_id)->get();
+
+        $this->doctor_details = $this->appointment->doctor;
+        $this->doctor_details = Doctor::with('speciality', 'doctorUser')->where('id', $this->doctor_details->id)->first();
+        
         $this->fetchAvailableDates($this->doctor_details);
     }
 
-    public function bookAppointment($slot) {
-        Appointment::create([
-            'patient_id'        => Auth::user()->id,
-            'doctor_id'         => $this->doctor_details->id,
-            
+    public function updateAppointment($slot) {
+        $rescheduled_by_details = Auth::user();
+        
+        $this->appointment->update([
             // since selectedDate formate is Wed 24 June 19 2024 and appointment date format is June 19 2024
             'appointment_date'  => Carbon::parse($this->selectedDate)->format('Y-m-d'),
             'appointment_time'  => $slot,
         ]);
 
         $patientEmailData = [
+            'old_appointment_date' => Carbon::parse($this->old_appointment_date)->format('d M Y D'),
+            'old_appointment_time'  => Carbon::parse($this->old_appointment_time)->format('g:i A'),
+            'rescheduled_by'        => $rescheduled_by_details->name,
+            'role'                  => $rescheduled_by_details->role,
             'date'                  => Carbon::parse($this->selectedDate)->format('d M Y D'),
             'time'                  => Carbon::parse($slot)->format('g:i A'),
             'patient_name'          => Auth::user()->name,
@@ -51,6 +66,10 @@ class BookingComponent extends Component
         ];
         
         $doctorEmailData = [
+            'old_appointment_date' => Carbon::parse($this->old_appointment_date)->format('d M Y D'),
+            'old_appointment_time'  => Carbon::parse($this->old_appointment_time)->format('g:i A'),
+            'rescheduled_by'        => $rescheduled_by_details->name,
+            'role'                  => $rescheduled_by_details->role,
             'date'                  => Carbon::parse($this->selectedDate)->format('d M Y D'),
             'time'                  => Carbon::parse($slot)->format('g:i A'),
             'patient_name'          => Auth::user()->name,
@@ -61,6 +80,10 @@ class BookingComponent extends Component
         ];
         
         $adminEmailData = [
+            'old_appointment_date' => Carbon::parse($this->old_appointment_date)->format('d M Y D'),
+            'old_appointment_time'  => Carbon::parse($this->old_appointment_time)->format('g:i A'),
+            'rescheduled_by'        => $rescheduled_by_details->name,
+            'role'                  => $rescheduled_by_details->role,
             'date'                  => Carbon::parse($this->selectedDate)->format('d M Y D'),
             'time'                  => Carbon::parse($slot)->format('g:i A'),
             'patient_name'          => Auth::user()->name,
@@ -68,14 +91,22 @@ class BookingComponent extends Component
             'doctor_name'           => $this->doctor_details->doctorUser->name,
             'doctor_email'          => $this->doctor_details->doctorUser->email,
             'doctor_specialization' => $this->doctor_details->speciality->speciality_name,
-            'admin_name'           => User::where('role', 2)->pluck('name')->first(),
+            'admin_name'            => User::where('role', 2)->pluck('name')->first(),
             'admin_email'           => User::where('role', 2)->pluck('email')->first(),
         ];
 
-        SendAppointmentCreatedEmail::dispatch($patientEmailData, $doctorEmailData, $adminEmailData);
+        SendAppointmentUpdatedEmail::dispatch($patientEmailData, $doctorEmailData, $adminEmailData);
 
-        session()->flash('message', 'Your appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate. $slot.' has been confirmed successfully!');
-        return $this->redirectRoute('patient-appointments-index', navigate:true);
+        session()->flash('message', 'Appointment with Dr. '.$this->doctor_details->doctorUser->name.' on '.$this->selectedDate. $slot.' has been confirmed successfully!');
+        
+        if (Auth::user()->role == 0) {
+            return $this->redirectRoute('patient-appointments-index', navigate:true);
+        } elseif(Auth::user()->role == 0) {
+            return $this->redirectRoute('doctor-appointments-index', navigate:true);
+        } else {
+            return $this->redirectRoute('admin-appointments-index', navigate:true);
+        }
+        
     
     }
 
@@ -144,10 +175,9 @@ class BookingComponent extends Component
         }
     }
 
+
     public function render()
     {
-        return view('livewire.booking-component', [
-            'availableDates' => $this->availableDates,
-        ]);
+        return view('livewire.reschedule-form');
     }
 }

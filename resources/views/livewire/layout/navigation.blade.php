@@ -35,7 +35,7 @@ new class extends Component
                         <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" wire:navigate>
                             {{ __('Dashboard') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('patient.appointments.index')" :active="request()->routeIs('patient.appointments*')" wire:navigate>
+                        <x-nav-link :href="route('patient-appointments-index')" :active="request()->routeIs('patient-appointments*')" wire:navigate>
                             {{ __('My Appointment') }}
                         </x-nav-link>
                         <x-nav-link :href="route('articles')" :active="request()->routeIs('articles')" wire:navigate>
@@ -52,7 +52,7 @@ new class extends Component
                         <x-nav-link :href="route('doctor-schedules')" :active="request()->routeIs('doctor-schedules*')" wire:navigate>
                             {{ __('Schedules') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('doctor-appointments')" :active="request()->routeIs('doctor-appointments')" wire:navigate>
+                        <x-nav-link :href="route('doctor-appointments-index')" :active="request()->routeIs('doctor-appointments*')" wire:navigate>
                             {{ __('My Appointment') }}
                         </x-nav-link>
                     @endif
@@ -68,7 +68,7 @@ new class extends Component
                         <x-nav-link :href="route('admin-specialities')" :active="request()->routeIs('admin-specialities*')" wire:navigate>
                             {{ __('Speciality') }}
                         </x-nav-link>
-                        <x-nav-link :href="route('admin-appointments')" :active="request()->routeIs('admin-appointments*')" wire:navigate>
+                        <x-nav-link :href="route('admin-appointments-index')" :active="request()->routeIs('admin-appointments*')" wire:navigate>
                             {{ __('All Appointments') }}
                         </x-nav-link>
                     @endif
