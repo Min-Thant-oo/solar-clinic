@@ -34,7 +34,7 @@
             <!-- Card -->
             <div class="flex flex-col gap-y-3 lg:gap-y-5 p-4 md:p-5 bg-white border shadow-sm rounded-xl">
                 <div class="inline-flex justify-center items-center">
-                <span class="size-2 inline-block bg-green-500 rounded-full me-2"></span>
+                <span class="size-2 inline-block bg-yellow-500 rounded-full me-2"></span>
                 <span class="text-xs font-semibold uppercase text-gray-600">Upcoming Appointments</span>
                 </div>
         
@@ -49,7 +49,7 @@
             <!-- Card -->
             <div class="flex flex-col gap-y-3 lg:gap-y-5 p-4 md:p-5 bg-white border shadow-sm rounded-xl">
                 <div class="inline-flex justify-center items-center">
-                <span class="size-2 inline-block bg-gray-500 rounded-full me-2"></span>
+                <span class="size-2 inline-block bg-green-500 rounded-full me-2"></span>
                 <span class="text-xs font-semibold uppercase text-gray-600">Completed Appointments</span>
                 </div>
         

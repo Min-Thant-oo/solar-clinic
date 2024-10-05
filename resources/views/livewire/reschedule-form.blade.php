@@ -59,12 +59,12 @@
                                     </div>
                                 @endif --}}
                                 <div class="col-span-2">
-                                    <div class="flex flex-col">
+                                    <div class="grid grid-cols-2">
                                         @if ($selectedDate)
                                             @if ($timeSlots)
-                                                <h2 class="text-md mt-3 mb-1">Available Time Slots for {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}:</h2>
+                                                <h2 class="text-md mt-3 mb-1 col-span-2">Available Time Slots for {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}:</h2>
                                             @endif
-                                            <div class="flex flex-wrap">
+                                            <div class="flex flex-wrap col-span-1">
                                                 @forelse ($timeSlots as $slot)
                                                         <button 
                                                             class="m-2 ml-0 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
@@ -75,7 +75,7 @@
                                                             {{ date('H:i',strtotime($slot)) }}                 
                                                         </button>
                                                     @empty
-                                                        <h3 class="mt-3 text-md">*No available slots for the selected date: {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}</h3>
+                                                        <h3 class="mt-3 text-md">*No available slots for selected date: {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}</h3>
                                                 @endforelse 
                                             </div>
                                             {{-- @else

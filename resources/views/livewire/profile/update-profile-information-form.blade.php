@@ -8,6 +8,8 @@ use Livewire\Volt\Component;
 
 new class extends Component
 {
+    
+
     public string $name = '';
     public string $email = '';
 
@@ -18,6 +20,7 @@ new class extends Component
     {
         $this->name = Auth::user()->name;
         $this->email = Auth::user()->email;
+        $this->profile_image = Auth::user()->profile_image;
     }
 
     /**
@@ -37,6 +40,7 @@ new class extends Component
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
         }
+
 
         $user->save();
 
@@ -103,8 +107,10 @@ new class extends Component
                 </div>
             @endif
         </div>
+        
+        
 
-        <div class="flex items-center gap-4">
+        <div class="flex mt-6 items-center gap-4">
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             <x-action-message class="me-3" on="profile-updated">

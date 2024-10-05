@@ -13,7 +13,7 @@
         @forelse ($featuredDoctors as $doctor)
           <div wire:key="{{ $doctor->id }}" class="flex flex-col p-4 bg-white border border-gray-200 rounded-xl md:p-6">
             <div class="flex items-center gap-x-4">
-              <img class="rounded-full size-20" src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80" alt="Avatar">
+              <livewire:profile-image :user_id="$doctor->doctorUser->id"/>
               <div class="grow">
                 <h3 class="font-medium text-gray-800">
                     {{ $doctor->doctorUser->name }}

@@ -7,12 +7,6 @@
     </x-slot>
 
     <div>
-        {{-- <div wire:loading>
-          <div class="animate-spin inline-block size-6 border-[3px] border-current border-t-transparent text-blue-600 rounded-full dark:text-blue-500" role="status" aria-label="loading">
-            <span class="sr-only">Loading...</span>
-          </div>
-          Processing..
-        </div> --}}
         
         <!-- Card Blog -->
             <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-10 bg-white border my-2  shadow-md">
@@ -20,7 +14,7 @@
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-12">
 
                     <div class="text-center col-span-1">
-                        {{-- <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/> --}}
+                        <livewire:profile-image :user_id="$doctor_details->doctorUser->id"/>
                         <div class="mt-2 sm:mt-4">
                         <h3 class="text-sm font-medium text-gray-800 sm:text-base lg:text-lg dark:text-neutral-200">
                             {{$doctor_details->doctorUser->name}}
@@ -47,26 +41,28 @@
                         
 
                             <div class="col-span-2">
-                                @if ($selectedDate)
-                                    @if ($timeSlots)
-                                        <h2 class="text-md mt-3 mb-1">Available Time Slots for {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}:</h2>
+                                <div class="grid grid-cols-2">
+                                    @if ($selectedDate)
+                                        @if ($timeSlots)
+                                            <h2 class="text-md mt-3 mb-1 col-span-2">Available Time Slots for {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}:</h2>
+                                        @endif
+                                        <div class="flex flex-wrap col-span-1">
+                                            @forelse ($timeSlots as $slot)
+                                                <button 
+                                                    class="m-2 ml-0 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+                                                    type="button"
+                                                    wire:click="bookAppointment('{{ $slot }}')"
+                                                    wire:confirm="Book appointment at {{\Carbon\Carbon::parse($slot)->format('g:i A')}} on {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}?"
+                                                >
+                                                    {{ date('g:i A',strtotime($slot)) }}                 
+                                                </button>
+                                            @empty
+                                                <h3 class="mt-3 text-md">*No available slots for selected date: {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}</h3>
+    
+                                            @endforelse
+                                        </div>
                                     @endif
-                                    <div class="flex flex-wrap">
-                                        @forelse ($timeSlots as $slot)
-                                            <button 
-                                                class="m-2 ml-0 p-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                                                type="button"
-                                                wire:click="bookAppointment('{{ $slot }}')"
-                                                wire:confirm="Book appointment at {{\Carbon\Carbon::parse($slot)->format('g:i A')}} on {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}?"
-                                            >
-                                                {{ date('g:i A',strtotime($slot)) }}                 
-                                            </button>
-                                        @empty
-                                            <h3 class="mt-3 text-md">*No available slots for the selected date: {{ \Carbon\Carbon::parse($selectedDate)->format('d M Y D') }}</h3>
-
-                                        @endforelse
-                                    </div>
-                                @endif
+                                </div>
                             </div>
                         </div>
                     </div>
